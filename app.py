@@ -141,7 +141,9 @@ def telegram_bot_envio():
   resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None)
   site = BeautifulSoup(resposta.content, features="html.parser")
   lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
-
+  
+  
+  data_hoje()
   mensagem_destaque_lista = []
   
   for materia in lista_materias:
