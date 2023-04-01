@@ -111,9 +111,9 @@ def telegram_bot():
   if 'text' not in update['message']:
     message = 'A mensagem é um conteúdo textual que não é possível compreender.'
   else:
-    message = update['message']['text'].lower().strip()
+    message = update['message']['text']
 
-  datahora = datetime.fromtimestamp(update["message"]["date"])
+  datahora = datetime.fromtimestamp(update['message']['date'])
 
   if "username" in update['message']['from']:
     username = f" @{update['message']['from']['username']}"
@@ -126,31 +126,26 @@ def telegram_bot():
 
   ### definição da mensagem a ser enviada a partir da mensagem recebida
 
-  if message == "/start":
-    texto_resposta = 'Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nPara ter acesso aos destaques do DOU de hoje, basta digitar /manda que eu te envio. \n \n Seja bem-vinda! \N{winking face}'
-
-  elif message == "/manda":
-    destaque = mensagem_destaque()
-    texto_final = apresentacao
-    for i in destaque:
-      texto_final = f'{texto_final} \n \n{i}'
-
-    texto_resposta = f'{texto_final} \n \n {finalizacao}'
+  if message == "start":
+    texto_resposta = "Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nPara ter acesso aos destaques do DOU de hoje, basta digitar /manda que eu te envio. \n \nSeja bem-vinda! \U0001F609"
 
   else:
-    texto_resposta = "Olá, humano! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>! Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \nPara receber as minhas mensagens, basta enviar um /manda que te envio na hora os principais decretos do dia.\n \nEspero que você goste do meu trabalho \N{winking face}"
+    texto_resposta = "Olá, humano! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>! Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \nPara receber as minhas mensagens, basta enviar um /manda que te envio na hora os principais decretos do dia.\n \nEspero que você goste do meu trabalho \U0001F609"
 
 
-    ### Códigos do telegram para enviar mensagem
+  ### Códigos do telegram para enviar mensagem
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
-    requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
+    resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
+    print(resposta.text)
+    print(message)
 
     mensagens.append([str(datahora), "enviada", username, first_name, chat_id, texto_resposta])
 
 
   ### Atualizando a planilha sheets ss mensagens enviadas
   sheet_mensagens.append_rows(mensagens)
-  
-  site = 'Ben está trabalhando...'
-  
-  return site
+  print(resposta.text)
+  print(message)
+ 
+
+  return 'Ben está trabalhando...'
