@@ -51,7 +51,7 @@ def data_hoje():
 
 # PASSO 2 | Entrar no site do Diário Oficial da União
 
-resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao')
+resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None, **kwargs)
 site = BeautifulSoup(resposta.content, features="html.parser")
 lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
 
