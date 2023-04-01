@@ -131,7 +131,7 @@ def telegram_bot():
 # PASSO 5 | TELEGRAM ENVIO DIÁRIO DE MENSAGENS
 @app.route("/bot-ben-telegram-envio")
 
-apresentacao = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n \U0001F4C6	<b>{data_hoje()}</b> \n'
+apresentacao = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n <b>{data_hoje()}</b> \n'
 finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
 
 
@@ -165,7 +165,7 @@ def telegram_bot_envio():
       texto_resposta = f'{texto_final} \n \n {finalizacao}'
     
     else:
-      texto_resposta = f'<b>Bom dia, humana!</b> \N{sun with face} \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
+      texto_resposta = f'<b>Bom dia, humana!</b> \U0001F31E \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
   
     mensagem = {"chat_id": TELEGRAM_ADMIN_ID, "text": texto_resposta, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org/bot{TELEGRAM_API_KEY}/sendMessage", data=mensagem)
