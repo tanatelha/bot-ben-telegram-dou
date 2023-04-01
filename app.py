@@ -25,6 +25,7 @@ conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 api = gspread.authorize(conta)
 planilha = api.open_by_key(f'{GOOGLE_SHEETS_KEY}') 
 sheet_mensagens = planilha.worksheet('mensagens')
+sheet_inscricoes = planilha.worksheet('inscricoes')
 
 app = Flask(__name__)
 
@@ -34,9 +35,7 @@ def index():
   return "Esse é o site do Ben do Diário Oficial da União"
 
 
-
-
-
+----------------------------------------------------------------------------------------------------------------------------------------
 
 # PASSO 1 | Descobrir o dia e transformar a data no formato do DOU
 
@@ -67,12 +66,6 @@ def data_hoje():
   return data_final
 
 
-# PASSO 2 | Entrar no site do Diário Oficial da União
-
-resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None)
-site = BeautifulSoup(resposta.content, features="html.parser")
-lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
-
 ### Criando a função que vai raspar o site do DOU e me devolver uma lista em que cada item é matéria daquele dia com suas informações
 def mensagem_destaque():
   mensagem_destaque_lista = []
@@ -91,37 +84,39 @@ def mensagem_destaque():
 
   return mensagem_destaque_lista
 
-# PASSO 3 | Criar as partes do texto que vão compor a mensagem final a ser enviada no Telegram
-
-apresentacao = f'<b>Bom dia, humana!</b> \N{sun with face} \n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n \N{tear-off calendar} <b>{data_hoje()}</b> \n'
-finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
-
-# PASSO 4 | TELEGRAM
+----------------------------------------------------------------------------------------------------------------------------------------
+ 
+# PASSO 4 | TELEGRAM INSCRICOES
 @app.route("/bot-ben-telegram", methods=["POST"])
 def telegram_bot():
   mensagens = []
+  inscricoes =[]
+  
   update = request.json 
 
   ### dados da mensagem
-  update_id = update['update_id']     
+  update_id = update['update_id']
   first_name = update['message']['from']['first_name']
+  last_name = update['message']['from']['last_name']
+  user_name = update['message']['from']['username']
   sender_id = update['message']['from']['id']
   chat_id = update['message']['chat']['id']
-
+  date = datetime.fromtimestamp(update['message']['date']).date().strftime('%d/%m/%Y')
+  time = datetime.fromtimestamp(update['message']['date']).time()
+  
   if 'text' not in update['message']:
     message = 'A mensagem é um conteúdo textual que não é possível compreender.'
   else:
-    message = update['message']['text']
-
-  datahora = datetime.fromtimestamp(update['message']['date'])
-
+    message = update['message']['text'].lower().strip()
+  
   if "username" in update['message']['from']:
-    username = f" @{update['message']['from']['username']}"
+    username = f"@{update['message']['from']['username']}"
   else:
-    username = ""
+    username = f'@ indisponível'
 
+  inscricoes.append([str(date), str(time), first_name, last_name, user_name, sender_id])
   mensagens.append([str(datahora), "recebida", username, first_name, chat_id, message]) # Salvar as mensagens recebidas no sheets
-
+  
 
 
   ### definição da mensagem a ser enviada a partir da mensagem recebida
@@ -136,16 +131,66 @@ def telegram_bot():
   ### Códigos do telegram para enviar mensagem
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
-    print(resposta.text)
-    print(message)
 
     mensagens.append([str(datahora), "enviada", username, first_name, chat_id, texto_resposta])
 
 
   ### Atualizando a planilha sheets ss mensagens enviadas
+  sheet_inscricoes.append_rows(inscricoes)
   sheet_mensagens.append_rows(mensagens)
-  print(resposta.text)
-  print(message)
- 
+  
 
-  return 'Ben está trabalhando...'
+  return f"Mensagem enviada. Resposta ({resposta.status_code}): {resposta.text}"
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+# PASSO 5 | TELEGRAM ENVIO DIÁRIO DE MENSAGENS
+@app.route("/bot-ben-telegram-envio")
+
+apresentacao = f'<b>Bom dia, humana!</b> \N{sun with face} \n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n \N{tear-off calendar} <b>{data_hoje()}</b> \n'
+finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
+
+
+def telegram_bot_envio():
+  resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None)
+  site = BeautifulSoup(resposta.content, features="html.parser")
+  lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
+
+  mensagem_destaque_lista = []
+  
+  for materia in lista_materias:
+    noticia = materia
+    data = (noticia.find('p', {'class' : 'date'})).text
+
+
+    if data == data_hoje():
+      pasta = noticia.find('p').text
+      manchete = noticia.find('a').text
+      link = noticia.find('a').get('href')
+
+      manchete_item = f"\N{card index dividers} <b>{pasta}</b> \n{manchete} | <a href='{link}'>Acesse aqui a decisão</a> "
+      mensagem_destaque_lista.append(manchete_item)
+      
+      # montagem texto
+      texto_final = apresentacao
+      for i in mensagem_destaque_lista:
+        texto_final += f'\n \n{i}'
+
+      texto_resposta = f'{texto_final} \n \n {finalizacao}'
+    
+    else:
+      texto_resposta = f'<b>Bom dia, humana!</b> \N{sun with face} \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
+  
+ 
+  return texto_resposta
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
