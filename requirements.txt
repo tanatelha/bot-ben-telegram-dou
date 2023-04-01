@@ -1,7 +1,8 @@
 bs4
 datetime
-python-dateutil
+flask
 gspread
 gunicorn
-requests
 oauth2client
+python-dateutil
+requests
