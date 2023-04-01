@@ -91,7 +91,7 @@ sheet_mensagens = planilha.worksheet('mensagens')
 
 
 # PASSO 5 | TELEGRAM
-update = request.json 
+update = requests.json 
 
 ### dados da mensagem
 update_id = update['update_id']     
