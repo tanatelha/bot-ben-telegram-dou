@@ -3,6 +3,8 @@ O bot Ben do Diário Oficial da União ou Ben do DOU, como ele se autodenominou,
 
 Os códigos aqui apresentados executam 3 funcionalidades exigidas no trabalho final: recebimento e envio de mensagens pela API de robôs do Telegram usando a biblioteca requests e o método webhook (site com Flask), leitura e escrita de dados em planilhas do Google Sheets usando a biblioteca gspread e criação de site dinâmicos em Python usando Flask
 
+Para conhecer o Ben, acesse t.me/BenDOU_bot.
+
 ## Composição
 Para utilizar esse robô, você irá precisar de alguns processos:
 * **BotFather:** é uma ferramenta do Telegram para criação de bot. Para car continuidade, é só acessar o site e seguir as orientações. Quando o robô for criado, o Telegram irá te enviar um token. É necessário salvar esse código, pois é com ele que você irá acessar a API do Telegram para enviar os comandos para o seu bot | [Acesso](https://t.me/botfather)
@@ -31,3 +33,6 @@ print(resposta.text)
 ```
 
 A biblioteca getpass é uma biblioteca que permite com que você use dados pessoais em um código. Ao rodar, irá aparecer um espaço, onde você irá adicionar o token do seu robô no Telegram. 
+
+## Contato
+Para dúvidas e sugestões, envie um e-mail para tanatelha.dados@gmail.com ;)
