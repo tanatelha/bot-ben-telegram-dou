@@ -7,7 +7,8 @@ import gspread
 import requests
 from flask import Flask, request
 from bs4 import BeautifulSoup
-from datetime import date, time, datetime, timedelta
+from datetime import date, time, timedelta
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from oauth2client.service_account import ServiceAccountCredentials 
 
@@ -103,7 +104,7 @@ def telegram_bot():
   else:
     message = update['message']['text'].lower().strip()
 
-  datahora = datetime.datetime.fromtimestamp(update["message"]["date"])
+  datahora = datetime.fromtimestamp(update["message"]["date"])
 
   if "username" in update['message']['from']:
     username = f" @{update['message']['from']['username']}"
