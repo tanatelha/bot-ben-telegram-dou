@@ -91,6 +91,7 @@ finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos
 # PASSO 4 | TELEGRAM
 @app.route("/bot-ben-telegram", methods=["POST"])
 def telegram_bot():
+  mensagens = []
   update = request.json 
 
   ### dados da mensagem
