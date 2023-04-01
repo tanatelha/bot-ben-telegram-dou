@@ -1,5 +1,6 @@
 bs4
 datetime
+dateutil
 gspread
 gunicorn
 requests
