@@ -97,7 +97,7 @@ apresentacao = f'<b>Bom dia, humana!</b> \N{sun with face} \n \nVamos lá para o
 finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
 
 # PASSO 4 | TELEGRAM
-@app.route("/bot-ben-telegram", methods=["GET"])
+@app.route("/bot-ben-telegram", methods=["POST"])
 def telegram_bot():
   mensagens = []
   update = request.json 
