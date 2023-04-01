@@ -52,7 +52,7 @@ def data_hoje():
 # PASSO 2 | Entrar no site do Diário Oficial da União
 
 resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao')
-site = BeautifulSoup(resposta.content)
+site = BeautifulSoup(resposta.content, features="html.parser")
 lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
 
 ### Criando a função que vai raspar o site do DOU e me devolver uma lista em que cada item é matéria daquele dia com suas informações
