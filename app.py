@@ -13,7 +13,8 @@ from dateutil.relativedelta import relativedelta
 from oauth2client.service_account import ServiceAccountCredentials 
 
 # variáveis de ambiente
-TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"] 
+TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
+TELEGRAM_ADMIN_ID = os.environ["TELEGRAM_ADMIN_ID"]
 
 GOOGLE_SHEETS_KEY = os.environ["GOOGLE_SHEETS_KEY"] 
 
@@ -24,8 +25,9 @@ conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 
 api = gspread.authorize(conta)
 planilha = api.open_by_key(f'{GOOGLE_SHEETS_KEY}') 
-sheet_mensagens = planilha.worksheet('mensagens')
-sheet_inscricoes = planilha.worksheet('inscricoes')
+sheet_mensagens = planilha.worksheet('mensagens2')
+sheet_inscricoes = planilha.worksheet('inscricoes2')
+sheet_enviadas = planilha.worksheet('enviadas2')
 
 app = Flask(__name__)
 
@@ -97,7 +99,7 @@ def telegram_bot():
     username = f'@ indisponível'
 
   inscricoes.append([str(date), str(time), first_name, last_name, user_name, sender_id])
-  mensagens.append([str(datahora), "recebida", username, first_name, chat_id, message]) # Salvar as mensagens recebidas no sheets
+  mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message]) # Salvar as mensagens recebidas no sheets
   
 
 
@@ -114,7 +116,7 @@ def telegram_bot():
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
 
-    mensagens.append([str(datahora), "enviada", username, first_name, chat_id, texto_resposta])
+    mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
 
 
   ### Atualizando a planilha sheets ss mensagens enviadas
@@ -129,11 +131,13 @@ def telegram_bot():
 # PASSO 5 | TELEGRAM ENVIO DIÁRIO DE MENSAGENS
 @app.route("/bot-ben-telegram-envio")
 
-apresentacao = f'<b>Bom dia, humana!</b> \N{sun with face} \n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n \N{tear-off calendar} <b>{data_hoje()}</b> \n'
+apresentacao = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n \U0001F4C6	<b>{data_hoje()}</b> \n'
 finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
 
 
 def telegram_bot_envio():
+  enviadas = []
+  
   resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None)
   site = BeautifulSoup(resposta.content, features="html.parser")
   lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
@@ -163,8 +167,18 @@ def telegram_bot_envio():
     else:
       texto_resposta = f'<b>Bom dia, humana!</b> \N{sun with face} \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
   
- 
-  return texto_resposta
+    mensagem = {"chat_id": TELEGRAM_ADMIN_ID, "text": texto_resposta, "parse_mode": 'html'}
+    resposta = requests.post(f"https://api.telegram.org/bot{TELEGRAM_API_KEY}/sendMessage", data=mensagem)
+    resposta
+    
+    enviadas.append([str(date), str(time), "enviada", chat_id, texto_resposta])
+
+
+  ### Atualizando a planilha sheets ss mensagens enviadas
+  sheet_enviadas.append_rows(enviadas)
+  
+  return f"Mensagem enviada. Resposta ({resposta.status_code}): {resposta.text}"
+
   
   
   
