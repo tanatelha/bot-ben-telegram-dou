@@ -90,7 +90,7 @@ sheet_mensagens = planilha.worksheet('mensagens')
 
 
 # PASSO 5 | TELEGRAM
-@app.route("/telegram-bot", methods=["POST"])
+@app.route("/bot-ben-telegram", methods=["POST"])
 def telegram_bot():
   update = request.json 
 
