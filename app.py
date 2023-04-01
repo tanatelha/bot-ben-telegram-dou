@@ -13,11 +13,18 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 # variáveis de ambiente
 TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"] 
+
 GOOGLE_SHEETS_KEY = os.environ["GOOGLE_SHEETS_KEY"] 
+
 GOOGLE_SHEETS_CREDENTIALS = os.environ['GOOGLE_SHEETS_CREDENTIALS']
 with open("credenciais.json", mode="w") as arquivo:
   arquivo.write(GOOGLE_SHEETS_CREDENTIALS)
 conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
+
+api = gspread.authorize(conta)
+planilha = api.open_by_key(f'{GOOGLE_SHEETS_KEY}') 
+sheet_mensagens = planilha.worksheet('mensagens')
+
 app = Flask(__name__)
 
 
@@ -72,9 +79,6 @@ def mensagem_destaque():
       manchete_item = f"\N{card index dividers} <b>{pasta}</b> \n{manchete} | <a href='{link}'>Acesse aqui a decisão</a> "
       mensagem_destaque_lista.append(manchete_item)
 
-  if not mensagem_destaque_lista:
-        return "Não há destaques para hoje."
-
   return mensagem_destaque_lista
 
 # PASSO 3 | Criar as partes do texto que vão compor a mensagem final a ser enviada no Telegram
@@ -82,15 +86,8 @@ def mensagem_destaque():
 apresentacao = f'<b>Bom dia, humana!</b> \N{sun with face} \n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n \N{tear-off calendar} <b>{data_hoje()}</b> \n'
 finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
 
-# PASSO 4 | Entrando no sheets
 
-api = gspread.authorize(conta)
-planilha = api.open_by_key(f'{GOOGLE_SHEETS_KEY}') 
-sheet = planilha.worksheet('id')
-sheet_mensagens = planilha.worksheet('mensagens')
-
-
-# PASSO 5 | TELEGRAM
+# PASSO 4 | TELEGRAM
 @app.route("/bot-ben-telegram", methods=["POST"])
 def telegram_bot():
   update = request.json 
