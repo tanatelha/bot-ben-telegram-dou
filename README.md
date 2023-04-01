@@ -1,6 +1,8 @@
 # Ben do Diário Oficial da União
 O bot Ben do Diário Oficial da União ou Ben do DOU, como ele se autodenominou, é um projeto final da aula de Algoritmos de Automação do Master em Jornalismo de Dados, Automação e Data Storytelling do Insper. O objetivo do robô é informar, diariament,e quais são os destaques do DOU, disponíveis [neste link](https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao).
 
+Os códigos aqui apresentados executam 3 funcionalidades exigidas no trabalho final: recebimento e envio de mensagens pela API de robôs do Telegram usando a biblioteca requests e o método webhook (site com Flask), leitura e escrita de dados em planilhas do Google Sheets usando a biblioteca gspread e criação de site dinâmicos em Python usando Flask
+
 ## Composição
 Para utilizar esse robô, você irá precisar de alguns processos:
 * **BotFather:** é uma ferramenta do Telegram para criação de bot. Para car continuidade, é só acessar o site e seguir as orientações. Quando o robô for criado, o Telegram irá te enviar um token. É necessário salvar esse código, pois é com ele que você irá acessar a API do Telegram para enviar os comandos para o seu bot | [Acesso](https://t.me/botfather)
