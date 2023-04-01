@@ -66,24 +66,6 @@ def data_hoje():
   return data_final
 
 
-### Criando a função que vai raspar o site do DOU e me devolver uma lista em que cada item é matéria daquele dia com suas informações
-def mensagem_destaque():
-  mensagem_destaque_lista = []
-  
-  for materia in lista_materias:
-    noticia = materia
-    data = (noticia.find('p', {'class' : 'date'})).text
-  
-    if data == data_hoje():
-      pasta = noticia.find('p').text
-      manchete = noticia.find('a').text
-      link = noticia.find('a').get('href')
-
-      manchete_item = f"\N{card index dividers} <b>{pasta}</b> \n{manchete} | <a href='{link}'>Acesse aqui a decisão</a> "
-      mensagem_destaque_lista.append(manchete_item)
-
-  return mensagem_destaque_lista
-
 ----------------------------------------------------------------------------------------------------------------------------------------
  
 # PASSO 4 | TELEGRAM INSCRICOES
