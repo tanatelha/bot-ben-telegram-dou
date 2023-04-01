@@ -29,6 +29,15 @@ sheet_mensagens = planilha.worksheet('mensagens')
 app = Flask(__name__)
 
 
+@app.route("/")
+def index():
+  return "Esse é o site do Ben do Diário Oficial da União"
+
+
+
+
+
+
 # PASSO 1 | Descobrir o dia e transformar a data no formato do DOU
 
 def data_hoje():
@@ -86,7 +95,6 @@ def mensagem_destaque():
 
 apresentacao = f'<b>Bom dia, humana!</b> \N{sun with face} \n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n \N{tear-off calendar} <b>{data_hoje()}</b> \n'
 finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
-
 
 # PASSO 4 | TELEGRAM
 @app.route("/bot-ben-telegram", methods=["POST"])
