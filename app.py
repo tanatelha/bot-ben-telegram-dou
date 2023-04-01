@@ -5,12 +5,11 @@ import os #biblioteca para ver chaves em ambiente virtual
 # bibliotecas externas: import em ordem alfabética e depois froms em ordem alfabética
 import gspread
 import requests
-
+from flask import Flask, request
 from bs4 import BeautifulSoup
 from datetime import date, time, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from oauth2client.service_account import ServiceAccountCredentials 
-import os
 
 # variáveis de ambiente
 TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"] 
@@ -91,7 +90,7 @@ sheet_mensagens = planilha.worksheet('mensagens')
 
 
 # PASSO 5 | TELEGRAM
-update = requests.json 
+update = request.json 
 
 ### dados da mensagem
 update_id = update['update_id']     
