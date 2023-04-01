@@ -1,4 +1,5 @@
 bs4
 datetime
-gspread oauth2client
+gspread
 requests
+oauth2client
