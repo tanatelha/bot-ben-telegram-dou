@@ -90,53 +90,57 @@ sheet_mensagens = planilha.worksheet('mensagens')
 
 
 # PASSO 5 | TELEGRAM
-update = request.json 
+@app.route("/telegram-bot", methods=["POST"])
+def telegram_bot():
+  update = request.json 
 
-### dados da mensagem
-update_id = update['update_id']     
-first_name = update['message']['from']['first_name']
-sender_id = update['message']['from']['id']
-chat_id = update['message']['chat']['id']
+  ### dados da mensagem
+  update_id = update['update_id']     
+  first_name = update['message']['from']['first_name']
+  sender_id = update['message']['from']['id']
+  chat_id = update['message']['chat']['id']
 
-if 'text' not in update['message']:
-  message = 'A mensagem é um conteúdo textual que não é possível compreender.'
-else:
-  message = update['message']['text'].lower().strip()
+  if 'text' not in update['message']:
+    message = 'A mensagem é um conteúdo textual que não é possível compreender.'
+  else:
+    message = update['message']['text'].lower().strip()
 
-datahora = datetime.datetime.fromtimestamp(update["message"]["date"])
+  datahora = datetime.datetime.fromtimestamp(update["message"]["date"])
 
-if "username" in update['message']['from']:
-  username = f" @{update['message']['from']['username']}"
-else:
-  username = ""
+  if "username" in update['message']['from']:
+    username = f" @{update['message']['from']['username']}"
+  else:
+    username = ""
 
-mensagens.append([str(datahora), "recebida", username, first_name, chat_id, message]) # Salvar as mensagens recebidas no sheets
-
-
-
-### definição da mensagem a ser enviada a partir da mensagem recebida
-
-if message == "/start":
-  texto_resposta = 'Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nPara ter acesso aos destaques do DOU de hoje, basta digitar /manda que eu te envio. \n \n Seja bem-vinda! \N{winking face}'
-
-elif message == "/manda":
-  destaque = mensagem_destaque()
-  texto_final = apresentacao
-  for i in destaque:
-    texto_final = f'{texto_final} \n \n{i}'
-
-  texto_resposta = f'{texto_final} \n \n {finalizacao}'
-
-else:
-  texto_resposta = "Olá, humano! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>! Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \nPara receber as minhas mensagens, basta enviar um /manda que te envio na hora os principais decretos do dia.\n \nEspero que você goste do meu trabalho \N{winking face}"
+  mensagens.append([str(datahora), "recebida", username, first_name, chat_id, message]) # Salvar as mensagens recebidas no sheets
 
 
-  ### Códigos do telegram para enviar mensagem
-  nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
-  requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
+
+  ### definição da mensagem a ser enviada a partir da mensagem recebida
+
+  if message == "/start":
+    texto_resposta = 'Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nPara ter acesso aos destaques do DOU de hoje, basta digitar /manda que eu te envio. \n \n Seja bem-vinda! \N{winking face}'
+
+  elif message == "/manda":
+    destaque = mensagem_destaque()
+    texto_final = apresentacao
+    for i in destaque:
+      texto_final = f'{texto_final} \n \n{i}'
+
+    texto_resposta = f'{texto_final} \n \n {finalizacao}'
+
+  else:
+    texto_resposta = "Olá, humano! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>! Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \nPara receber as minhas mensagens, basta enviar um /manda que te envio na hora os principais decretos do dia.\n \nEspero que você goste do meu trabalho \N{winking face}"
+
+
+    ### Códigos do telegram para enviar mensagem
+    nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
+    requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
+
+    mensagens.append([str(datahora), "enviada", username, first_name, chat_id, texto_resposta])
+
+
+  ### Atualizando a planilha sheets ss mensagens enviadas
+  sheet_mensagens.append_rows(mensagens)
   
-  mensagens.append([str(datahora), "enviada", username, first_name, chat_id, texto_resposta])
-
-
-### Atualizando a planilha sheets ss mensagens enviadas
-sheet_mensagens.append_rows(mensagens)
+  return "ok"
