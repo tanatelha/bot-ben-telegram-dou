@@ -18,6 +18,7 @@ GOOGLE_SHEETS_CREDENTIALS = os.environ['GOOGLE_SHEETS_CREDENTIALS']
 with open("credenciais.json", mode="w") as arquivo:
   arquivo.write(GOOGLE_SHEETS_CREDENTIALS)
 conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
+app = Flask(__name__)
 
 
 # PASSO 1 | Descobrir o dia e transformar a data no formato do DOU
