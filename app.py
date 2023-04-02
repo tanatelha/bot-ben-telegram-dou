@@ -143,7 +143,7 @@ def telegram_bot_envio():
   lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
   
   
-  data_hoje()
+  data_hoje = data_hoje()
   mensagem_destaque_lista = []
   
   for materia in lista_materias:
@@ -151,7 +151,7 @@ def telegram_bot_envio():
     data = (noticia.find('p', {'class' : 'date'})).text
 
 
-    if data == data_hoje():
+    if data == data_hoje:
       pasta = noticia.find('p').text
       manchete = noticia.find('a').text
       link = noticia.find('a').get('href')
