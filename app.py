@@ -105,7 +105,7 @@ def telegram_bot():
 
   ### definição da mensagem a ser enviada a partir da mensagem recebida
 
-  if message == "start":
+  if message == "/start":
     texto_resposta = "Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nPara ter acesso aos destaques do DOU de hoje, basta digitar /manda que eu te envio. \n \nSeja bem-vinda! \U0001F609"
 
   else:
@@ -115,6 +115,7 @@ def telegram_bot():
   ### Códigos do telegram para enviar mensagem
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
+    resposta
 
     mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
 
@@ -169,7 +170,7 @@ def telegram_bot_envio():
       texto_resposta = f'<b>Bom dia, humana!</b> \U0001F31E \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
   
     mensagem = {"chat_id": TELEGRAM_ADMIN_ID, "text": texto_resposta, "parse_mode": 'html'}
-    resposta = requests.post(f"https://api.telegram.org/bot{TELEGRAM_API_KEY}/sendMessage", data=mensagem)
+    resposta = requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data=mensagem)
     resposta
     
     enviadas.append([str(date), str(time), "enviada", chat_id, texto_resposta])
