@@ -101,7 +101,7 @@ def telegram_bot():
     
   # salvando as mensagens no sheet  
   if message == "/start":  
-    inscricoes.append([str(date), str(time), first_name, last_name, user_name, sender_id])
+    inscricoes.append([str(date), str(time), first_name, last_name, user_name, sender_id, chat_id, message])
   else:
     mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message]) 
   
@@ -139,6 +139,7 @@ def telegram_bot():
 
 def telegram_bot_envio():
   enviadas = []
+  resposta = ""
   data_atual = data_hoje()
 
   apresentacao = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_atual}</b> \n'
@@ -177,7 +178,7 @@ def telegram_bot_envio():
     resposta = requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data=mensagem)
     resposta
     
-    enviadas.append([str(date), str(time), "enviada", chat_id, texto_resposta])
+    enviadas.append([str(date), str(time), "enviada", TELEGRAM_ADMIN_ID, texto_resposta])
 
 
   ### Atualizando a planilha sheets ss mensagens enviadas
