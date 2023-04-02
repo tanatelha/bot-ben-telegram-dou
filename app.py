@@ -131,14 +131,13 @@ def telegram_bot():
 # PASSO 5 | TELEGRAM ENVIO DIÁRIO DE MENSAGENS
 @app.route("/bot-ben-telegram-envio")
 
-data_atual = data_hoje()
-
-apresentacao = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_atual}</b> \n'
-finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
-
 
 def telegram_bot_envio():
   enviadas = []
+  data_atual = data_hoje()
+
+  apresentacao = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_atual}</b> \n'
+  finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
   
   resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None)
   site = BeautifulSoup(resposta.content, features="html.parser")
