@@ -113,12 +113,16 @@ def telegram_bot():
 
   if message == "/start":
     texto_resposta = "enviou /start"
+    
+    nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
+    resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
+    print(resposta.text)
+
+    mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
   
   else:
     texto_resposta = "enviou outra coisa"
     
-
-  ### Códigos do telegram para enviar mensagem
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
     print(resposta.text)
@@ -130,7 +134,7 @@ def telegram_bot():
   sheet_inscricoes.append_rows(inscricoes)
   sheet_mensagens.append_rows(mensagens)
   
-
+  print(resposta.text)
   return "ok"
 
 #----------------------------------------------------------------------------------------------------------------------------------------
