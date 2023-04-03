@@ -25,9 +25,9 @@ conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 
 api = gspread.authorize(conta)
 planilha = api.open_by_key(f'{GOOGLE_SHEETS_KEY}') 
-sheet_mensagens = planilha.worksheet('mensagens2')
-sheet_inscricoes = planilha.worksheet('inscricoes2')
-sheet_enviadas = planilha.worksheet('enviadas2')
+sheet_mensagens = planilha.worksheet('mensagens')
+sheet_inscricoes = planilha.worksheet('inscricoes')
+sheet_enviadas = planilha.worksheet('enviadas')
 
 app = Flask(__name__)
 
@@ -74,7 +74,7 @@ def data_hoje():
 @app.route("/bot-ben-telegram", methods=["POST"])
 def telegram_bot():
   mensagens = []
-  inscricoes =[]
+  inscricoes = []
   
   update = request.json 
 
