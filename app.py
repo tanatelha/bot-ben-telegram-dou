@@ -109,12 +109,12 @@ def telegram_bot():
 
   ### definição da mensagem a ser enviada a partir da mensagem recebida
 
-  if message == "/start":
-    texto_resposta = "Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nPara ter acesso aos destaques do DOU de hoje, basta digitar /manda que eu te envio. \n \nSeja bem-vinda! \U0001F609"
-
-  else:
+  if message != "/start":
     texto_resposta = "Olá, humano! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>! Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \nPara receber as minhas mensagens, basta enviar um /manda que te envio na hora os principais decretos do dia.\n \nEspero que você goste do meu trabalho \U0001F609"
-
+  
+  else:
+    texto_resposta = "teste"
+    
 
   ### Códigos do telegram para enviar mensagem
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
