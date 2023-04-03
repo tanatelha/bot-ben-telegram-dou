@@ -144,6 +144,7 @@ def telegram_bot():
 
 
 def telegram_bot_envio():
+  enviadas = []
   data_atual = data_hoje()
 
   apresentacao = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_hoje()}</b> \n'
@@ -185,8 +186,8 @@ def telegram_bot_envio():
 
   ### Atualizando a planilha sheets ss mensagens enviadas
 sheet_enviadas.append_rows(enviadas)
-  
-return "ok"
+
+  return "ok"
   
   
   
