@@ -27,7 +27,7 @@ import requests
 
 token = getpass.getpass()
 
-dados = {"url": "https://bot-ben-telegram-dou.onrender.com"}  # colocar aqui o site do Web Service criado no Render
+dados = {"url": "https://seu-site-do-render.onrender.com"}  # colocar aqui o site do Web Service criado no Render
 resposta = requests.post(f"https://api.telegram.org/bot{token}/setWebhook", data = dados)
 print(resposta.text)
 ```
