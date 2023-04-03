@@ -116,7 +116,6 @@ def telegram_bot():
     
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
-    print(resposta.text)
 
     mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
   
@@ -125,7 +124,6 @@ def telegram_bot():
     
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
-    print(resposta.text)
 
     mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
 
