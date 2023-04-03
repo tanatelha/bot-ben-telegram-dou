@@ -118,8 +118,7 @@ def telegram_bot():
 
   ### Códigos do telegram para enviar mensagem
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
-    resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
-    resposta
+    requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
 
     mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
 
@@ -129,7 +128,7 @@ def telegram_bot():
   sheet_mensagens.append_rows(mensagens)
   
 
-  return f"Mensagem enviada. Resposta ({resposta.status_code}): {resposta.text}"
+  return "ok"
 
 #----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -175,8 +174,7 @@ def telegram_bot_envio():
       texto_resposta = f'<b>Bom dia, humana!</b> \U0001F31E \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
   
     mensagem = {"chat_id": TELEGRAM_ADMIN_ID, "text": texto_resposta, "parse_mode": 'html'}
-    resposta = requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data=mensagem)
-    resposta
+    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data=mensagem)
     
     enviadas.append([str(date), str(time), "enviada", TELEGRAM_ADMIN_ID, texto_resposta])
 
@@ -184,8 +182,7 @@ def telegram_bot_envio():
   ### Atualizando a planilha sheets ss mensagens enviadas
   sheet_enviadas.append_rows(enviadas)
   
-  return f"Mensagem enviada. Resposta ({resposta.status_code}): {resposta.text}"
-
+  return "ok"
   
   
   
