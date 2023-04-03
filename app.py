@@ -180,24 +180,16 @@ def telegram_bot_envio():
     else:
       texto_resposta = f'<b>Bom dia, humana!</b> \U0001F31E \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
   
+    
     mensagem = {"chat_id": TELEGRAM_ADMIN_ID, "text": texto_resposta, "parse_mode": 'html'}
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data=mensagem)
     
     enviadas.append([data_atual, str(time), "enviada", TELEGRAM_ADMIN_ID, texto_resposta])
 
-
   ### Atualizando a planilha sheets ss mensagens enviadas
   sheet_enviadas.append_rows(enviadas)
   
   return "ok"
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
