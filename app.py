@@ -102,6 +102,8 @@ def telegram_bot():
   # salvando as mensagens no sheet  
   if message == "/start":  
     inscricoes.append([str(date), str(time), first_name, last_name, user_name, sender_id, chat_id, message])
+    mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message])
+    
   else:
     mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message]) 
   
@@ -109,16 +111,17 @@ def telegram_bot():
 
   ### definição da mensagem a ser enviada a partir da mensagem recebida
 
-  if message != "/start":
-    texto_resposta = "Olá, humano! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>! Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \nPara receber as minhas mensagens, basta enviar um /manda que te envio na hora os principais decretos do dia.\n \nEspero que você goste do meu trabalho \U0001F609"
+  if message == "/start":
+    texto_resposta = "enviou /start"
   
   else:
-    texto_resposta = "teste"
+    texto_resposta = "enviou outra coisa"
     
 
   ### Códigos do telegram para enviar mensagem
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
-    requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
+    resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
+    print(resposta.text)
 
     mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
 
