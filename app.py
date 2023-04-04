@@ -73,7 +73,7 @@ def data_hoje():
 def hora_hoje():
   fuso_horario = pytz.timezone('America/Sao_Paulo')   # define o fuso horário
   hora_atual_fuso = datetime.now(fuso_horario)   # obtem a hora atual com o fuso horário definido
-  hora_atual_fuso_formatada = hora_atual.strftime('%H:%M:%S')  # converte a hora atual em uma string formatada
+  hora_atual_fuso_formatada = hora_atual_fuso.strftime('%H:%M:%S')  # converte a hora atual em uma string formatada
   return hora_atual_fuso_formatada
 
 #----------------------------------------------------------------------------------------------------------------------------------------
