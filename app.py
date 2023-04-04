@@ -69,11 +69,13 @@ def data_hoje():
 
   return data_final
 
-def hora_hoje:
+
+def hora_hoje():
   fuso_horario = pytz.timezone('America/Sao_Paulo')   # define o fuso horário
   hora_atual_fuso = datetime.now(fuso_horario)   # obtem a hora atual com o fuso horário definido
   hora_atual_fuso_formatada = hora_atual.strftime('%H:%M:%S')  # converte a hora atual em uma string formatada
   return hora_atual_fuso_formatada
+
 #----------------------------------------------------------------------------------------------------------------------------------------
  
 # PASSO 4 | TELEGRAM INSCRICOES
