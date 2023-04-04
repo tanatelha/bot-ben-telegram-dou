@@ -4,6 +4,7 @@ import os #biblioteca para ver chaves em ambiente virtual
 
 # bibliotecas externas: import em ordem alfabética e depois froms em ordem alfabética
 import gspread
+import pytz
 import requests
 from flask import Flask, request
 from bs4 import BeautifulSoup
@@ -20,7 +21,7 @@ GOOGLE_SHEETS_KEY = os.environ["GOOGLE_SHEETS_KEY"]
 
 GOOGLE_SHEETS_CREDENTIALS = os.environ['GOOGLE_SHEETS_CREDENTIALS']
 with open("credenciais.json", mode="w") as arquivo:
-  arquivo.write(GOOGLE_SHEETS_CREDENTIALS)
+    arquivo.write(GOOGLE_SHEETS_CREDENTIALS)
 conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 
 api = gspread.authorize(conta)
@@ -28,6 +29,7 @@ planilha = api.open_by_key(f'{GOOGLE_SHEETS_KEY}')
 sheet_mensagens = planilha.worksheet('mensagens')
 sheet_inscricoes = planilha.worksheet('inscricoes')
 sheet_enviadas = planilha.worksheet('enviadas')
+sheet_inscritos = planilha.worksheet('inscritos')
 
 app = Flask(__name__)
 
@@ -67,7 +69,11 @@ def data_hoje():
 
   return data_final
 
-
+def hora_hoje:
+  fuso_horario = pytz.timezone('America/Sao_Paulo')   # define o fuso horário
+  hora_atual_fuso = datetime.now(fuso_horario)   # obtem a hora atual com o fuso horário definido
+  hora_atual_fuso_formatada = hora_atual.strftime('%H:%M:%S')  # converte a hora atual em uma string formatada
+  return hora_atual_fuso_formatada
 #----------------------------------------------------------------------------------------------------------------------------------------
  
 # PASSO 4 | TELEGRAM INSCRICOES
@@ -142,17 +148,18 @@ def telegram_bot():
 
 
 def telegram_bot_envio():
+  
+  # fazer a raspagem e identificar o texto final do dia
   enviadas = []
-  data_atual = data_hoje()
-
-  apresentacao = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_hoje()}</b> \n'
+  data_hoje()
+  
   finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
 
   resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None)
   site = BeautifulSoup(resposta.content, features="html.parser")
   lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
 
-  texto = apresentacao
+  texto = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_hoje()}</b> \n'
 
   lista = []
 
@@ -176,14 +183,32 @@ def telegram_bot_envio():
 
   if not lista:
     texto_resposta = f'<b>Bom dia, humana!</b> \U0001F31E \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
-    
-  mensagem = {"chat_id": TELEGRAM_ADMIN_ID, "text": texto_resposta, "parse_mode": 'html'}
-  requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", data=mensagem)
-    
-  enviadas.append([data_atual, str(time), "enviada", TELEGRAM_ADMIN_ID, texto_resposta])
+  
+  # identificar os destinatários
+  planilha_inscritos = planilha.worksheet('inscritos')
 
-  ### Atualizando a planilha sheets ss mensagens enviadas
-sheet_enviadas.append_rows(enviadas)
+  def identificar_inscritos():
+    lista_inicial = []
+    inscritos_final = []
+
+    inscritos = sheet_inscritos.col_values(6)
+    inscritos = list(set(inscritos))
+    inscritos.remove('')
+    lista_inicial.append(inscritos)
+
+    for item in lista_inicial:
+        inscritos_final.extend(item)
+
+    return inscritos_final
+  
+  for id in identificar_inscritos():
+    mensagem = {"chat_id": id, "text": texto_resposta, "parse_mode": 'html'}
+    requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
+
+    enviadas.append([str(data_atual), str(hora_hoje), "enviada", id, texto_resposta])
+
+    ### Atualizando a planilha sheets ss mensagens enviadas
+    sheet_enviadas.append_rows(enviadas)
 
   return "ok"
   
