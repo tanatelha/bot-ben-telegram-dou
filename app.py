@@ -212,7 +212,8 @@ def telegram_bot_envio():
 
     ### Atualizando a planilha sheets ss mensagens enviadas
     sheet_enviadas.append_rows(enviadas)
-
+    
+  print(resposta.text)
   return "ok"
   
   
