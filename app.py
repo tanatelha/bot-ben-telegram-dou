@@ -148,8 +148,9 @@ def telegram_bot():
 # PASSO 5 | TELEGRAM ENVIO DIÁRIO DE MENSAGENS
 @app.route("/bot-ben-telegram-envio")
 
-
 def telegram_bot_envio():
+  data = data_hoje()
+  hora = hora_hoje()
   
   # fazer a raspagem e identificar o texto final do dia
   enviadas = []
@@ -207,7 +208,7 @@ def telegram_bot_envio():
     mensagem = {"chat_id": id, "text": texto_resposta, "parse_mode": 'html'}
     requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
 
-    enviadas.append([str(data_atual()), str(hora_hoje()), "enviada", id, texto_resposta])
+    enviadas.append([str(data), str(hora), "enviada", id, texto_resposta])
 
     ### Atualizando a planilha sheets ss mensagens enviadas
     sheet_enviadas.append_rows(enviadas)
