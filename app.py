@@ -149,14 +149,12 @@ def telegram_bot():
 @app.route("/bot-ben-telegram-envio")
 
 def telegram_bot_envio():
-  
+    
     def mensagem():
       data = data_hoje()
       hora = hora_hoje()
 
       # fazer a raspagem e identificar o texto final do dia
-      enviadas = []
-      data_hoje()
 
       finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
 
@@ -214,6 +212,8 @@ def telegram_bot_envio():
         return inscritos_final
 
     for id in identificar_inscritos():
+        enviadas = []
+        
         mensagem = {"chat_id": id, "text": 'boa noite', "parse_mode": 'html'}
         resposta_2 = requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
 
