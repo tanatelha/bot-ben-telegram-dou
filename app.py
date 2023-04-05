@@ -204,7 +204,7 @@ def identificar_inscritos():
 
     # fazendo apenas uma lista
     for sublista in lista_inicial:
-    inscritos_final.extend(sublista)
+        inscritos_final.extend(sublista)
 
     return inscritos_final
 
