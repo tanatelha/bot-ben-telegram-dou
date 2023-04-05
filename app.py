@@ -190,7 +190,7 @@ def telegram_bot_envio():
   # identificar os destinatários
   planilha_inscritos = planilha.worksheet('inscritos')
 
-  def identificar_inscritos():
+def identificar_inscritos():
     lista_inicial = []
     inscritos_final = []
 
@@ -201,14 +201,14 @@ def telegram_bot_envio():
         inscritos_final.append(inscritos)
     else:
         inscritos_final.append(inscritos)
-        
+
     # fazendo apenas uma lista
     for sublista in lista_inicial:
-        inscritos_final.extend(sublista)
+    inscritos_final.extend(sublista)
 
     return inscritos_final
-  
-  for id in identificar_inscritos():
+
+for id in identificar_inscritos():
     mensagem = {"chat_id": id, "text": 'boa noite', "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
 
@@ -218,7 +218,7 @@ def telegram_bot_envio():
     sheet_enviadas.append_rows(enviadas)
     
   print(resposta.text)
-  return "ok"
+  return f'{(resposta.text)}'
   
   
   
