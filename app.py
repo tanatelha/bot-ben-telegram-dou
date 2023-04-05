@@ -149,46 +149,51 @@ def telegram_bot():
 @app.route("/bot-ben-telegram-envio")
 
 def telegram_bot_envio():
-  data = data_hoje()
-  hora = hora_hoje()
   
-  # fazer a raspagem e identificar o texto final do dia
-  enviadas = []
-  data_hoje()
-  
-  finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
+    def mensagem():
+      data = data_hoje()
+      hora = hora_hoje()
 
-  resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None)
-  site = BeautifulSoup(resposta.content, features="html.parser")
-  lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
+      # fazer a raspagem e identificar o texto final do dia
+      enviadas = []
+      data_hoje()
 
-  texto = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_hoje()}</b> \n'
+      finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
 
-  lista = []
+      resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None)
+      site = BeautifulSoup(resposta.content, features="html.parser")
+      lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
 
-  for materia in lista_materias:
-    noticia = materia
-    data = (noticia.find('p', {'class' : 'date'})).text
+      texto = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_hoje()}</b> \n'
 
-    if data == data_hoje():
-      data = (noticia.find('p', {'class' : 'date'})).text
-      pasta = noticia.find('p').text
-      manchete = noticia.find('a').text
-      link = noticia.find('a').get('href')
+      lista = []
 
-      manchete_item = f"\N{card index dividers} <b>{pasta}</b> \n{manchete} | <a href='{link}'>Acesse aqui a decisão</a> "
-      lista.append(manchete_item)
+      for materia in lista_materias:
+        noticia = materia
+        data = (noticia.find('p', {'class' : 'date'})).text
 
-  if lista:
-    for item in lista:
-      texto += f'{item}'
-      texto_resposta = texto
+        if data == data_hoje():
+          data = (noticia.find('p', {'class' : 'date'})).text
+          pasta = noticia.find('p').text
+          manchete = noticia.find('a').text
+          link = noticia.find('a').get('href')
 
-  if not lista:
-    texto_resposta = f'<b>Bom dia, humana!</b> \U0001F31E \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
-  
-  # identificar os destinatários
-  planilha_inscritos = planilha.worksheet('inscritos')
+          manchete_item = f"\N{card index dividers} <b>{pasta}</b> \n{manchete} | <a href='{link}'>Acesse aqui a decisão</a> "
+          lista.append(manchete_item)
+
+      if lista:
+        for item in lista:
+          texto += f'{item}'
+          texto_resposta = texto
+
+      if not lista:
+        texto_resposta = f'<b>Bom dia, humana!</b> \U0001F31E \n \nNão tem Destaques do DOU para o dia de hoje! \n \n<i>Pode descansar e fazer outra coisa! \U0001F973</i>'
+
+      return texto_resposta
+
+
+    # identificar os destinatários
+    planilha_inscritos = planilha.worksheet('inscritos')
 
     def identificar_inscritos():
         lista_inicial = []
@@ -198,9 +203,9 @@ def telegram_bot_envio():
         inscritos = list(set(inscritos))
         if '' in inscritos:
             inscritos.remove('')
-            inscritos_final.append(inscritos)
+            lista_inicial.append(inscritos)
         else:
-            inscritos_final.append(inscritos)
+            lista_inicial.append(inscritos)
 
         # fazendo apenas uma lista
         for sublista in lista_inicial:
