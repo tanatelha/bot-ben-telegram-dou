@@ -190,35 +190,36 @@ def telegram_bot_envio():
   # identificar os destinatários
   planilha_inscritos = planilha.worksheet('inscritos')
 
-def identificar_inscritos():
-    lista_inicial = []
-    inscritos_final = []
+    def identificar_inscritos():
+        lista_inicial = []
+        inscritos_final = []
 
-    inscritos = sheet_inscritos.col_values(6)
-    inscritos = list(set(inscritos))
-    if '' in inscritos:
-        inscritos.remove('')
-        inscritos_final.append(inscritos)
-    else:
-        inscritos_final.append(inscritos)
+        inscritos = sheet_inscritos.col_values(6)
+        inscritos = list(set(inscritos))
+        if '' in inscritos:
+            inscritos.remove('')
+            inscritos_final.append(inscritos)
+        else:
+            inscritos_final.append(inscritos)
 
-    # fazendo apenas uma lista
-    for sublista in lista_inicial:
-        inscritos_final.extend(sublista)
+        # fazendo apenas uma lista
+        for sublista in lista_inicial:
+            inscritos_final.extend(sublista)
 
-    return inscritos_final
+        return inscritos_final
 
-for id in identificar_inscritos():
-    mensagem = {"chat_id": id, "text": 'boa noite', "parse_mode": 'html'}
-    resposta = requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
+    for id in identificar_inscritos():
+        mensagem = {"chat_id": id, "text": 'boa noite', "parse_mode": 'html'}
+        resposta_2 = requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
 
-    enviadas.append([str(data), str(hora), "enviada", id, texto_resposta])
+        enviadas.append([str(data), str(hora), "enviada", id, texto_resposta])
 
-    ### Atualizando a planilha sheets ss mensagens enviadas
-    sheet_enviadas.append_rows(enviadas)
-    
-  print(resposta.text)
-  return f'{(resposta.text)}'
+        ### Atualizando a planilha sheets ss mensagens enviadas
+        sheet_enviadas.append_rows(enviadas)
+
+        print(resposta_2.text)
+
+        return f'{(resposta_2.text)}'
   
   
   
