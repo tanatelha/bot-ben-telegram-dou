@@ -206,7 +206,7 @@ def telegram_bot_envio():
     for sublista in lista_inicial:
         inscritos_final.extend(sublista)
 
-  return inscritos_final
+    return inscritos_final
   
   for id in identificar_inscritos():
     mensagem = {"chat_id": id, "text": 'boa noite', "parse_mode": 'html'}
