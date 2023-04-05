@@ -198,19 +198,15 @@ def telegram_bot_envio():
     inscritos = list(set(inscritos))
     if '' in inscritos:
         inscritos.remove('')
-        lista_inicial.append(inscritos)
+        inscritos_final.append(inscritos)
     else:
-        lista_inicial.append(inscritos)
-        
-
-    for item in lista_inicial:
-        inscritos_final.extend(item)
+        inscritos_final.append(inscritos)
 
     return inscritos_final
   
   for id in identificar_inscritos():
-    mensagem = {"chat_id": id, "text": texto_resposta, "parse_mode": 'html'}
-    requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
+    mensagem = {"chat_id": id, "text": 'boa noite', "parse_mode": 'html'}
+    resposta = requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
 
     enviadas.append([str(data), str(hora), "enviada", id, texto_resposta])
 
