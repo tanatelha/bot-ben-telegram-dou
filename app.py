@@ -217,7 +217,7 @@ def telegram_bot_envio():
         nova_mensagem = {"chat_id": id,
                     "text": 'boa noite',
                     "parse_mode": 'html'}
-        resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_API_KEY}/sendMessage", data=nova_mensagem)
+        resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data=nova_mensagem)
         print(resposta.text)
         
         enviadas.append([str(data), str(hora), "enviada", id])
