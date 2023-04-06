@@ -149,10 +149,10 @@ def telegram_bot():
 @app.route("/bot-ben-telegram-envio")
 
 def telegram_bot_envio():
+    data = data_hoje()
+    hora = hora_hoje()
     
     def mensagem():
-      data = data_hoje()
-      hora = hora_hoje()
 
       # fazer a raspagem e identificar o texto final do dia
 
