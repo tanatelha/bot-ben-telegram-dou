@@ -217,7 +217,7 @@ def telegram_bot_envio():
         mensagem = {"chat_id": id, "text": 'boa noite', "parse_mode": 'html'}
         resposta_2 = requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
 
-        enviadas.append([str(data), str(hora), "enviada", id, texto_resposta])
+        enviadas.append([str(data), str(hora), "enviada", id])
 
         ### Atualizando a planilha sheets ss mensagens enviadas
         sheet_enviadas.append_rows(enviadas)
