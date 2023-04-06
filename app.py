@@ -214,9 +214,13 @@ def telegram_bot_envio():
     for id in identificar_inscritos():
         enviadas = []
         
-        mensagem = {"chat_id": id, "text": 'boa noite', "parse_mode": 'html'}
-        resposta_2 = requests.post(f"https://api.telegram.org/bot{id}/sendMessage", data=mensagem)
-
+        nova_mensagem = {"chat_id": id,
+                    "text": 'boa noite',
+                    "parse_mode": 'html'}
+        resposta = requests.post(f"https://api.telegram.org./bot{id}/sendMessage", data=nova_mensagem)
+        print(resposta.text)
+        return "ok"
+        
         enviadas.append([str(data), str(hora), "enviada", id])
 
         ### Atualizando a planilha sheets ss mensagens enviadas
