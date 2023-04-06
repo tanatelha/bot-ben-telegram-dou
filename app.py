@@ -181,7 +181,7 @@ def telegram_bot_envio():
 
       if lista:
         for item in lista:
-          texto += f'{item}'
+          texto += f'{item}' \n \n
           texto_resposta = texto
 
       if not lista:
@@ -218,15 +218,15 @@ def telegram_bot_envio():
                     "text": mensagem(),
                     "parse_mode": 'html'}
         resposta_2 = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data=nova_mensagem)
-        print(resposta_2.text)
+        #print(resposta_2.text)
         
-        enviadas.append([str(data), str(hora), "enviada", id, mensagem()])
+      enviadas.append([str(data), str(hora), "enviada", id, mensagem()])
 
         ### Atualizando a planilha sheets ss mensagens enviadas
-        sheet_enviadas.append_rows(enviadas)
+      sheet_enviadas.append_rows(enviadas)
 
-       
-        return f'{(resposta_2.text)}'
+      print(resposta_2.text) 
+      return f'{(resposta_2.text)}'
   
   
   
