@@ -219,7 +219,6 @@ def telegram_bot_envio():
                     "parse_mode": 'html'}
         resposta = requests.post(f"https://api.telegram.org./bot{id}/sendMessage", data=nova_mensagem)
         print(resposta.text)
-        return "ok"
         
         enviadas.append([str(data), str(hora), "enviada", id])
 
