@@ -82,12 +82,12 @@ def telegram_bot():
 
     
   # salvando as mensagens no sheet  
-  if message == "/start":  
-    inscricoes.append([str(date), str(time), first_name, last_name, username, sender_id, chat_id, message])
-    mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message])
+  #if message == "/start":  
+    #inscricoes.append([str(date), str(time), first_name, last_name, username, sender_id, chat_id, message])
+    #mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message])
     
-  else:
-    mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message]) 
+  #else:
+    #mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message]) 
   
 
 
@@ -98,8 +98,10 @@ def telegram_bot():
         instritos = identificar_inscritos()
         if chat_id in instritos:
             texto = f'voce já está inscrito meu irmao'
+            mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, texto])
         else:
             texto = "Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... h\U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \nVocê acaba de se inscrever para receber os destaques do DOU! As mensagens serão enviadas todos os dias a partir das 7h da manhã. \n \nSeja bem-vinda! \U0001F609"
+            inscricoes.append([str(date), str(time), "inscrito", first_name, last_name, username, sender_id, chat_id, texto])
             
         return texto
     
