@@ -211,11 +211,11 @@ def telegram_bot():
         if linha_encontrada:
           sheet_inscritos.delete_row(linha_encontrada)
         
-        texto_resposta = f'Você foi descadrastado!'
+        texto = f'Você foi descadrastado!'
 
-        return texto_resposta
+        return texto
     
-    texto_saida = processo_de_descadrastamento()
+    texto_resposta = processo_de_descadrastamento()
     
     nova_mensagem = {"chat_id": id_procurado, "text": texto_saida, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
