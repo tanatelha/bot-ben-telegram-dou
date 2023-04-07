@@ -255,7 +255,7 @@ def telegram_bot_envio():
     texto_resposta = mensagem()
     inscritos = identificar_inscritos()
     
-    update = request.json
+    #update = request.json
     first_name = update['message']['from']['first_name']
     last_name = update['message']['from']['last_name']
     if "username" in update['message']['from']:
