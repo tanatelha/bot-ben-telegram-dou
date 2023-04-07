@@ -2,7 +2,7 @@ def identificar_inscritos():
     lista_inicial = []
     inscritos_final = []
 
-    inscritos = sheet_inscritos.col_values(6)
+    inscritos = planilha_inscritos.col_values(6)
     inscritos = list(set(inscritos))
     if '' in inscritos:
         inscritos.remove('')
