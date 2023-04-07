@@ -161,7 +161,6 @@ def telegram_bot():
   update_id = update['update_id']
   first_name = update['message']['from']['first_name']
   last_name = update['message']['from']['last_name']
-  user_name = update['message']['from']['username']
   sender_id = update['message']['from']['id']
   chat_id = update['message']['chat']['id']
   date = datetime.fromtimestamp(update['message']['date']).date().strftime('%d/%m/%Y')
