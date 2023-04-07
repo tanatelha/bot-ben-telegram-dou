@@ -14,9 +14,9 @@ from dateutil.relativedelta import relativedelta
 from oauth2client.service_account import ServiceAccountCredentials 
 
 # importanto funcoes de outros arquivos do repositório
-from data_hora.py import data_hoje, hora_hoje
-from raspador.py import mensagem
-from inscritos.py import identificar_inscritos
+from data_hora import data_hoje, hora_hoje
+from raspador import mensagem
+from inscritos import identificar_inscritos
 
 
 # variáveis de ambiente
