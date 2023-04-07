@@ -199,10 +199,10 @@ def telegram_bot():
   
 
   elif message == "/descadrastar" :
+    id_procurado = update['message']['chat']['id']  # é o mesmo valor que o chat_id calculado lá em cima
+
     
     def processo_de_descadrastamento():
-        id_procurado = update['message']['chat']['id']    # é o mesmo valor que o chat_id calculado lá em cima
-
         linha_encontrada = None
 
         for i, row in enumerate(data):
@@ -212,7 +212,6 @@ def telegram_bot():
         if linha_encontrada:
           sheet_inscricoes.delete_row(linha_encontrada)
         
-        descadrastados.append([str(date), str(time), "descadratado", username, first_name, chat_id, message])
         texto_resposta = f'Você foi descadrastado!'
 
         return texto_resposta
@@ -223,6 +222,8 @@ def telegram_bot():
     
     descadastrados.append([str(date), str(time), "descadastrado", username, first_name, chat_id, texto_resposta])
 
+    
+    
   else:
     texto_resposta = "Olá, humano! \n \nVocê já se inscreveu para receber os destaques do Executivo publicados no <i>Diário Oficial da União</i>. Agora é só esperar os envios das mensagens todo dia de manhã a partir das 7h \U0001F609"
     
