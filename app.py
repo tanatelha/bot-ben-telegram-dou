@@ -27,7 +27,6 @@ conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 api = gspread.authorize(conta)
 planilha = api.open_by_key(f'{GOOGLE_SHEETS_KEY}') 
 sheet_mensagens = planilha.worksheet('mensagens')
-sheet_inscricoes = planilha.worksheet('inscricoes')
 sheet_enviadas = planilha.worksheet('enviadas')
 sheet_inscritos = planilha.worksheet('inscritos')
 sheet_descadastrados = planilha.worksheet('descadastrados')
@@ -198,10 +197,10 @@ def telegram_bot():
     mensagens.append([str(date), str(time), "inscrito", username, first_name, chat_id, texto_resposta])
   
 
-  elif message == "/descadrastar" :
+  elif message == "/descadrastar":
+    data = sheet_inscritos.get_all_values()
     id_procurado = update['message']['chat']['id']  # é o mesmo valor que o chat_id calculado lá em cima
 
-    
     def processo_de_descadrastamento():
         linha_encontrada = None
 
@@ -210,7 +209,7 @@ def telegram_bot():
             linha_encontrada = i+1    # índice da linha no sheet começa com 0, então adiciona-se 1 ao índice da lista
 
         if linha_encontrada:
-          sheet_inscricoes.delete_row(linha_encontrada)
+          sheet_inscritos.delete_row(linha_encontrada)
         
         texto_resposta = f'Você foi descadrastado!'
 
@@ -236,7 +235,7 @@ def telegram_bot():
     
  
   ### Atualizando a planilha sheets ss mensagens enviadas
-  sheet_inscricoes.append_rows(inscricoes)
+  sheet_inscritos.append_rows(inscricoes)
   sheet_mensagens.append_rows(mensagens)
   sheet_descadastrados.append_rows(descadastrados)
 
