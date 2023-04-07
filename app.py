@@ -215,7 +215,9 @@ def telegram_bot():
 
         return texto_resposta
     
-    nova_mensagem = {"chat_id": id_procurado, "text": processo_de_descadrastamento(), "parse_mode": 'html'}
+    texto_saida = processo_de_descadrastamento()
+    
+    nova_mensagem = {"chat_id": id_procurado, "text": texto_saida, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
     print(resposta.text)
     
