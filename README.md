@@ -18,9 +18,6 @@ Para utilizar esse robô, você irá precisar de alguns processos:
 * **raspador.py:** contém o raspador do site do DOU oficial e formatação da mensagem a ser enviada
 * **requirements.txt:** é um arquivo de texto que possui todas as bibliotecas que precisam ser instaladas para rodar o código dentro da nuvem
 
-
-* **telegram.py**: arquivo final com os códigos do robô
-
 ## setWebhook
 É um método disponível na API do Telegram que permite a configuração de uma URL para receber atualizações do bot de forma assíncrona, em vez de usar o método getUpdates que faz com que o bot precise verificar periodicamente se há atualizações. Quando você configura um webhook, o Telegram enviará uma solicitação HTTP POST para a URL que você especificou sempre que houver uma atualização para o seu bot.
 
