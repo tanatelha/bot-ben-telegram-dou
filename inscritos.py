@@ -1,8 +1,3 @@
-api = gspread.authorize(conta)
-planilha = api.open_by_key(f'{GOOGLE_SHEETS_KEY}') 
-sheet_inscritos = planilha.worksheet('inscritos')
-
-
 def identificar_inscritos():
     lista_inicial = []
     inscritos_final = []
