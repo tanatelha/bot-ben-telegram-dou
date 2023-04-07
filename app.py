@@ -30,7 +30,7 @@ sheet_mensagens = planilha.worksheet('mensagens')
 sheet_inscricoes = planilha.worksheet('inscricoes')
 sheet_enviadas = planilha.worksheet('enviadas')
 sheet_inscritos = planilha.worksheet('inscritos')
-sheet_descadastrados = planilha.workheet('descadastrados')
+sheet_descadastrados = planilha.worksheet('descadastrados')
 
 
 
