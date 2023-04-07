@@ -30,9 +30,13 @@ sheet_mensagens = planilha.worksheet('mensagens')
 sheet_inscricoes = planilha.worksheet('inscricoes')
 sheet_enviadas = planilha.worksheet('enviadas')
 sheet_inscritos = planilha.worksheet('inscritos')
+sheet_descadastrados = planilha.workheet('descadastrados')
+
+
+
+
 
 app = Flask(__name__)
-
 
 @app.route("/")
 def index():
@@ -149,6 +153,7 @@ def identificar_inscritos():
 def telegram_bot():
   mensagens = []
   inscricoes = []
+  descadastrados = []
   
   update = request.json 
 
@@ -191,8 +196,34 @@ def telegram_bot():
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
 
-    mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
+    mensagens.append([str(date), str(time), "inscrito", username, first_name, chat_id, texto_resposta])
   
+
+  elif message == "/descadrastar" :
+    
+    def processo_de_descadrastamento():
+        id_procurado = update['message']['chat']['id']    # é o mesmo valor que o chat_id calculado lá em cima
+
+        linha_encontrada = None
+
+        for i, row in enumerate(data):
+          if row[5] == id_procurado:
+            linha_encontrada = i+1    # índice da linha no sheet começa com 0, então adiciona-se 1 ao índice da lista
+
+        if linha_encontrada:
+          sheet_inscricoes.delete_row(linha_encontrada)
+        
+        descadrastados.append([str(date), str(time), "descadratado", username, first_name, chat_id, message])
+        texto_resposta = f'Você foi descadrastado!'
+
+        return texto_resposta
+    
+    nova_mensagem = {"chat_id": id_procurado, "text": processo_de_descadrastamento(), "parse_mode": 'html'}
+    resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
+    print(resposta.text)
+    
+    descadastrados.append([str(date), str(time), "descadastrado", username, first_name, chat_id, texto_resposta])
+
   else:
     texto_resposta = "Olá, humano! \n \nVocê já se inscreveu para receber os destaques do Executivo publicados no <i>Diário Oficial da União</i>. Agora é só esperar os envios das mensagens todo dia de manhã a partir das 7h \U0001F609"
     
@@ -200,12 +231,15 @@ def telegram_bot():
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
 
     mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
-
-
+    
+    
+    
+ 
   ### Atualizando a planilha sheets ss mensagens enviadas
   sheet_inscricoes.append_rows(inscricoes)
   sheet_mensagens.append_rows(mensagens)
-  
+  sheet_descadastrados.append_rows(descadastrados)
+
   print(resposta.text)
   return "ok"
 
