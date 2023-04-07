@@ -179,7 +179,7 @@ def telegram_bot():
     
   # salvando as mensagens no sheet  
   if message == "/start":  
-    inscricoes.append([str(date), str(time), first_name, last_name, user_name, sender_id, chat_id, message])
+    inscricoes.append([str(date), str(time), first_name, last_name, username, sender_id, chat_id, message])
     mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message])
     
   else:
@@ -252,6 +252,15 @@ def telegram_bot_envio():
     hora = hora_hoje()
     texto_resposta = mensagem()
     inscritos = identificar_inscritos()
+    
+    update = request.json
+    first_name = update['message']['from']['first_name']
+    last_name = update['message']['from']['last_name']
+    if "username" in update['message']['from']:
+        username = f"@{update['message']['from']['username']}"
+    else:
+        username = f'@ indisponível'
+    
 
     enviadas = []
     for id in inscritos:
@@ -260,7 +269,7 @@ def telegram_bot_envio():
                     "parse_mode": 'html'}
         resposta_2 = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data=nova_mensagem)
         #print(resposta_2.text)
-        enviadas.append([str(data), str(hora), "enviada", id, texto_resposta])
+        enviadas.append([str(data), str(hora), "enviada", id, first_name, last_name, username, texto_resposta])
     
     sheet_enviadas.append_rows(enviadas)
 
