@@ -63,8 +63,13 @@ def telegram_bot():
   sender_id = update['message']['from']['id']
   chat_id = update['message']['chat']['id']
   date = datetime.fromtimestamp(update['message']['date']).date().strftime('%d/%m/%Y')
-  time = datetime.fromtimestamp(update['message']['date']).time()
-  
+ 
+  # calcular horário / converter fuso
+  timestamp = update['message']['date']  
+  fuso_sao_paulo = pytz.timezone('America/Sao_Paulo') # converter para o fuso horário 'America/Sao_Paulo'
+  saopaulo_time = datetime.fromtimestamp(timestamp, fuso_sao_paulo)
+  time = saopaulo_time.strftime('%H:%M:%S')
+
   if 'text' not in update['message']:
     message = 'A mensagem é um conteúdo textual que não é possível compreender.'
   else:
