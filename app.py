@@ -140,11 +140,9 @@ def identificar_inscritos():
 
 
 
-
-
-
-
 #----------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 # PASSO 4 | TELEGRAM INSCRICOES
 @app.route("/bot-ben-telegram", methods=["POST"])
@@ -229,13 +227,12 @@ def telegram_bot_envio():
                     "parse_mode": 'html'}
         resposta_2 = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data=nova_mensagem)
         #print(resposta_2.text)
-        
-        
-      enviadas.append([str(data), str(hora), "enviada", id, texto_resposta])
-      sheet_enviadas.append_rows(enviadas)
+        enviadas.append([str(data), str(hora), "enviada", id, texto_resposta])
+    
+    sheet_enviadas.append_rows(enviadas)
 
-      print(resposta_2.text) 
-      return f'{(resposta_2.text)}'
+    print(resposta_2.text) 
+    return f'{(resposta_2.text)}'
   
   
   
