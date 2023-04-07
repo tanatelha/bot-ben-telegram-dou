@@ -12,9 +12,13 @@ Para utilizar esse robô, você irá precisar de alguns processos:
 * **Render:** é uma plataforma de nuvem, em que podemos usar para rodar o código e automatizar seu funcionamento. No Ben, essa foi a ferramenta utilizada, mas você pode escolher a de sua preferência
 
 ## Arquivos
-* **requirements.txt:** esse arquivo de texto possui todas as bibliotecas que precisam ser instaladas para rodar o código dentro da nuvem
-* **data_hoje.py:** é um py com uma função que coleta o dia e formata do jeito que é solicitado para raspar o DOU
-* **raspador.py**: é o raspador do site do DOU oficial
+* **app.py:** contém aplicação do robo no Telegram junto com os sites criado no Flask para automatização
+* **data_hora.py:** contém duas funções. a primeira é a que coleta o dia e formata do jeito que é solicitado para raspar o DOU; e a segunda calcula a hora
+* **inscritos.py:** contém a função que identifica a lista de inscritos no Ben para receber os destaques
+* **raspador.py:** contém o raspador do site do DOU oficial e formatação da mensagem a ser enviada
+* **requirements.txt:** é um arquivo de texto que possui todas as bibliotecas que precisam ser instaladas para rodar o código dentro da nuvem
+
+
 * **telegram.py**: arquivo final com os códigos do robô
 
 ## setWebhook
