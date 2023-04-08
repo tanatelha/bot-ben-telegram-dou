@@ -11,7 +11,8 @@ def mensagem():
 
   finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
 
-  resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None)
+  headers = {'User-Agent': 'Mozilla/5.0'}
+  resposta = requests.get('https://www.in.gov.br/servicos/diario-oficial-da-uniao/destaques-do-diario-oficial-da-uniao', params=None, headers=headers)
   site = BeautifulSoup(resposta.content, features="html.parser")
   lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
 
