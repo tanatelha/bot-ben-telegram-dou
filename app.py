@@ -95,7 +95,7 @@ def telegram_bot():
   print(inscritos)
   
   if message == "/start":
-        if chat_id in inscritos:
+        if str(chat_id) in inscritos:
             print(chat_id)
             texto_resposta = f'voce já está inscrito meu irmao'
             nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
