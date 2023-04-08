@@ -1,3 +1,8 @@
+import pytz
+from datetime import date, time, timedelta
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
 def data_hoje():
 
   data = date.today()
