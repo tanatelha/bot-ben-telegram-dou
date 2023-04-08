@@ -1,5 +1,6 @@
 import os
 import gspread
+from oauth2client.service_account import ServiceAccountCredentials 
 
 GOOGLE_SHEETS_KEY = os.environ["GOOGLE_SHEETS_KEY"] 
 
