@@ -89,13 +89,14 @@ def telegram_bot():
   #else:
     #mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message]) 
   
-  inscritos = sheet_inscritos.col_values(6)
-
-
+  
   ### definição da mensagem a ser enviada a partir da mensagem recebida
-
+  inscritos = sheet_inscritos.col_values(6)
+  print(inscritos)
+  
   if message == "/start":
         if chat_id in inscritos:
+            print(chat_id)
             texto_resposta = f'voce já está inscrito meu irmao'
             nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
             resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
@@ -138,8 +139,7 @@ def telegram_bot():
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
     mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
     
-    
-    
+ 
  
   ### Atualizando a planilha sheets ss mensagens enviadas
   sheet_inscritos.append_rows(inscricoes)
