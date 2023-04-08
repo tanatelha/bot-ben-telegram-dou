@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 from datetime import date, time, timedelta
 from datetime import datetime
 
+from data_hora import data_hoje, hora_hoje
+
+data_do_dia = data_hoje()
+
 def mensagem():
 
   finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
@@ -11,7 +15,7 @@ def mensagem():
   site = BeautifulSoup(resposta.content, features="html.parser")
   lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
 
-  texto = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_hoje()}</b> \n'
+  texto = f'<b>Bom dia, humana!</b> \U0001F31E	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_do_dia}</b> \n'
 
   lista = []
 
@@ -19,7 +23,7 @@ def mensagem():
     noticia = materia
     data = (noticia.find('p', {'class' : 'date'})).text
 
-    if data == data_hoje():
+    if data == data_do_dia:
       data = (noticia.find('p', {'class' : 'date'})).text
       pasta = noticia.find('p').text
       manchete = noticia.find('a').text
