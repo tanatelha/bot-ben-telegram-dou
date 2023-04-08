@@ -1,3 +1,8 @@
+import requests
+from bs4 import BeautifulSoup
+from datetime import date, time, timedelta
+from datetime import datetime
+
 def mensagem():
 
   finalizacao = f'Para mais informações, <a href="https://www.in.gov.br/servicos/diario-oficial-da-uniao">acesse o site do DOU</a>'
