@@ -97,7 +97,7 @@ def telegram_bot():
   if message == "/start":
         if str(chat_id) in inscritos:
             print(chat_id)
-            texto_resposta = f'Hmmm... \U0001F914 \n \nPelas minhas anotações, você já está inscrita para receber os destaques do Diário Oficial da União! \n \nAgora é só esperar as manhãs para tomar café junto com os destaques em mãos \U0001F60C \U0002615'
+            texto_resposta = f'Hmmm... \U0001F914 \n \nPelas minhas anotações, você já está inscrita para receber os destaques do Diário Oficial da União! \n \nAgora é só esperar as manhãs para tomar café junto com os destaques em mãos \U0001F60C \N{hot beverage}'
             nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
             resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
             mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, texto_resposta])
