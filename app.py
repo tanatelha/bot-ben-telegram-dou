@@ -97,13 +97,13 @@ def telegram_bot():
   if message == "/start":
         if str(chat_id) in inscritos:
             print(chat_id)
-            texto_resposta = f'Hmmm... \U0001F914 \n \nPelas minhas anotações, você já está inscrita para receber os destaques do Diário Oficial da União! \n \nAgora é só esperar as manhãs para tomar café junto com os destaques em mãos \U0001F60C \N{hot beverage}'
+            texto_resposta = f'Hmmm... \U0001F914 \n \nPelas minhas anotações, <b>você já está inscrita</b> para receber os destaques do Diário Oficial da União! \n \nAgora é só esperar as manhãs para tomar café com os destaques em mãos \U0001F60C \N{hot beverage}'
             nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
             resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
             mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, texto_resposta])
 
         else:
-            texto_resposta = "Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \nVocê acaba de se inscrever para receber os destaques do DOU! As mensagens serão enviadas todos os dias a partir das 7h da manhã. \n \nSeja bem-vinda! \U0001F609"
+            texto_resposta = "Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \n<b>Você acaba de se inscrever para receber os destaques do DOU!</> \n \nAs mensagens serão enviadas todos os dias a partir das 7h da manhã \U0001F973"
             nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
             resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
             inscricoes.append([str(date), str(time), first_name, last_name, username, sender_id, chat_id, message])
@@ -111,7 +111,7 @@ def telegram_bot():
             
   elif message == "/descadrastar":
     data = sheet_inscritos.get_all_values()
-    id_procurado = update['message']['chat']['id']  # é o mesmo valor que o chat_id calculado lá em cima
+    id_procurado = f'update['message']['chat']['id']'  # é o mesmo valor que o chat_id calculado lá em cima
 
     def processo_de_descadrastamento():
         linha_encontrada = None
