@@ -111,7 +111,7 @@ def telegram_bot():
             
   elif message == "/descadrastar":
     data = sheet_inscritos.get_all_values()
-    id_procurado = f'{update['message']['chat']['id']}'  # é o mesmo valor que o chat_id calculado lá em cima
+    id_procurado = str(chat_id)  # é o mesmo valor que o chat_id calculado lá em cima
 
     def processo_de_descadrastamento():
         linha_encontrada = None
