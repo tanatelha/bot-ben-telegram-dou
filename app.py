@@ -94,6 +94,7 @@ def telegram_bot():
   ### definição da mensagem a ser enviada a partir da mensagem recebida
 
   if message == "/start":
+    chat_id = update['message']['chat']['id']
     inscritos = sheet_inscritos.col_values(6)
     
     if chat_id in inscritos:
