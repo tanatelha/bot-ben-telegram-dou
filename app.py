@@ -97,7 +97,7 @@ def telegram_bot():
   if message == "/start":
         if str(chat_id) in inscritos:
             print(chat_id)
-            texto_resposta = f'voce já está inscrito meu irmao'
+            texto_resposta = f'Hmmm... \U0001F914 \n \nPelas minhas anotações, você já está inscrita para receber os destaques do Diário Oficial da União! \n \nAgora é só esperar as manhãs para tomar café junto com os destaques em mãos \U0001F60C \U0002615'
             nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
             resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
             mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, texto_resposta])
@@ -123,7 +123,7 @@ def telegram_bot():
         if linha_encontrada:
           sheet_inscritos.delete_row(linha_encontrada)
         
-        texto = f'Você foi descadrastado!'
+        texto = f'Você foi descadrastado e não irá mais receber as minhas mensagens! Que pena, humana! \U0001F622 \n \nCaso deseje voltar a receber os meus trabalhos, basta me mandar "/start" que eu te reinscrevo. \n \nNos vemos por aí \U0001F916'
 
         return texto
     
