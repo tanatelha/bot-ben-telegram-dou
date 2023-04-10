@@ -145,7 +145,8 @@ def telegram_bot():
   sheet_inscritos.append_rows(inscricoes)
   sheet_mensagens.append_rows(mensagens)
   sheet_descadastrados.append_rows(descadastrados)
-
+    
+  print(message)
   print(resposta.text)
   return "ok"
 
@@ -159,7 +160,7 @@ def telegram_bot_envio():
     data = data_hoje()
     hora = hora_hoje()
     texto_resposta = mensagem()
-    inscritos = identificar_inscritos()
+    #inscritos = identificar_inscritos()
     
 
     enviadas = []
