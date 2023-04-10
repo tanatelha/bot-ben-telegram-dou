@@ -97,7 +97,7 @@ def telegram_bot():
   if message == "/start":
         if str(chat_id) in inscritos:
             print(chat_id)
-            texto_resposta = f'Hmmm... \U0001F914 \n \nPelas minhas anotações, <b>você já está inscrita</b> para receber os destaques do Diário Oficial da União! \n \nAgora é só esperar as manhãs para tomar café com os destaques em mãos \U0001F60C \N{hot beverage}'
+            texto_resposta = f'Hmmm... \U0001F914 \n \nPelas minhas anotações, <b>você já está inscrita</b> para receber os destaques do Diário Oficial da União! \n \nAgora é só esperar as manhãs para tomar café com os destaques em mãos \U0001F60C \N{hot beverage} \n \nCaso queira acessar um comando específico, clique em "menu" aqui do lado esquerdo da tela \nN{down arrow}'
             nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
             resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
             mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, texto_resposta])
@@ -134,7 +134,7 @@ def telegram_bot():
 
     
   else:
-    texto_resposta = f"Olá, humana! \n \nVocê já se inscreveu para receber os destaques do Executivo publicados no <i>Diário Oficial da União</i>. Agora é só esperar os envios das mensagens todo dia de manhã a partir das 7h \U0001F609 \n \nCaso queira acessar um comando específico, clique em 'menu' aqui do lado esquerdo da tela \nN{down arrow}"
+    texto_resposta = f'Olá, humana! \n \nVocê já se inscreveu para receber os destaques do Executivo publicados no <i>Diário Oficial da União</i>. Agora é só esperar os envios das mensagens todo dia de manhã a partir das 7h \U0001F609 \n \nCaso queira acessar um comando específico, clique em "menu" aqui do lado esquerdo da tela \nN{down arrow}'
     nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
     resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
     mensagens.append([str(date), str(time), "enviada", username, first_name, chat_id, texto_resposta])
