@@ -160,8 +160,7 @@ def telegram_bot_envio():
     data = data_hoje()
     hora = hora_hoje()
     texto_resposta = mensagem()
-    #inscritos = identificar_inscritos()
-    
+   
 
     enviadas = []
     for id in inscritos:
