@@ -16,7 +16,7 @@ def mensagem():
   site = BeautifulSoup(resposta.content, features="html.parser")
   lista_materias = site.findAll('div', {'class' : 'dou row'}) #parte do site html que tem as matérias
 
-  texto = f'<b>Bom dia, humana!</b> \U0001F31E \N{hot beverage}	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n< b>{data_do_dia}</b> \n'
+  texto = f'<b>Bom dia, humana!</b> \U0001F31E \N{hot beverage}	\n \nVamos lá para os destaques do <i>Diário Oficial da União</i> de hoje! \n \n<b>{data_do_dia}</b> \n'
 
   lista = []
 
