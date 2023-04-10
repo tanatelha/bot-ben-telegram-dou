@@ -16,7 +16,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 # importanto funcoes de outros arquivos do repositório
 from data_hora import data_hoje, hora_hoje
 from raspador import mensagem
-from inscritos import identificar_inscritos
 
 
 # variáveis de ambiente
@@ -59,7 +58,6 @@ def telegram_bot():
   ### dados da mensagem
   update_id = update['update_id']
   first_name = update['message']['from']['first_name']
-  last_name = update['message']['from']['last_name']
   sender_id = update['message']['from']['id']
   chat_id = update['message']['chat']['id']
   date = datetime.fromtimestamp(update['message']['date']).date().strftime('%d/%m/%Y')
@@ -106,7 +104,7 @@ def telegram_bot():
             texto_resposta = "Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \n<b>Você acaba de se inscrever para receber os destaques do DOU!</> \n \nAs mensagens serão enviadas todos os dias a partir das 7h da manhã \U0001F973"
             nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
             resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
-            inscricoes.append([str(date), str(time), first_name, last_name, username, sender_id, chat_id, message])
+            inscricoes.append([str(date), str(time), first_name, username, sender_id, chat_id, message])
             
             
   elif message == "/exit":
@@ -160,6 +158,7 @@ def telegram_bot_envio():
     data = data_hoje()
     hora = hora_hoje()
     texto_resposta = mensagem()
+    inscritos = sheet_inscritos.col_values(6)
    
 
     enviadas = []
