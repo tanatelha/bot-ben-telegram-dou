@@ -109,7 +109,7 @@ def telegram_bot():
             inscricoes.append([str(date), str(time), first_name, last_name, username, sender_id, chat_id, message])
             
             
-  elif message == "/descadastrar":
+  elif message == "/exit":
     data = sheet_inscritos.get_all_values()
     id_procurado = str(chat_id)  # é o mesmo valor que o chat_id calculado lá em cima
 
