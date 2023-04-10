@@ -3,7 +3,7 @@ O bot Ben do Diário Oficial da União ou Ben do DOU, como ele se autodenominou,
 
 Os códigos aqui apresentados executam 3 funcionalidades exigidas no trabalho final: recebimento e envio de mensagens pela API de robôs do Telegram usando a biblioteca requests e o método webhook (site com Flask), leitura e escrita de dados em planilhas do Google Sheets usando a biblioteca gspread e criação de site dinâmicos em Python usando Flask
 
-Para conhecer o Ben, acesse a sua [página oficial no Telegram](https://t.me/BenDOU_bot).
+Para conhecer o Ben, acesse a sua [página oficial no Telegram](https://t.me/BenDOU_bot) ou busque por **@BenDOU_bot**.
 
 ## Composição
 Para utilizar esse robô, você irá precisar de alguns processos:
