@@ -101,7 +101,7 @@ def telegram_bot():
             mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, texto_resposta])
 
         else:
-            texto_resposta = "Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \n<b>Você acaba de se inscrever para receber os destaques do DOU!</> \n \nAs mensagens serão enviadas todos os dias a partir das 7h da manhã \U0001F973"
+            texto_resposta = "Olá, humana! \n \nEu sou o <b>Benjamin do Diário Oficial da União</b>, mas você pode me chamar de <b>Ben do DOU</b>!  Ou apenas Ben... \U0001F916 \n \nSou um bot criado para enviar diariamente, por meio do Telegram, os destaques do Executivo publicados no <i>Diário Oficial da União</i>. \n \n<b>Você acaba de se inscrever para receber os destaques do DOU!</b> \n \nAs mensagens serão enviadas todos os dias a partir das 7h da manhã \U0001F973"
             nova_mensagem = {"chat_id": chat_id, "text": texto_resposta, "parse_mode": 'html'}
             resposta = requests.post(f"https://api.telegram.org./bot{TELEGRAM_TOKEN}/sendMessage", data = nova_mensagem)
             inscricoes.append([str(date), str(time), first_name, username, sender_id, chat_id, message])
