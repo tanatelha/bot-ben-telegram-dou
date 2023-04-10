@@ -109,7 +109,7 @@ def telegram_bot():
             inscricoes.append([str(date), str(time), first_name, last_name, username, sender_id, chat_id, message])
             
             
-  elif message == "/descadrastar":
+  elif message == "/descadastrar":
     data = sheet_inscritos.get_all_values()
     id_procurado = str(chat_id)  # é o mesmo valor que o chat_id calculado lá em cima
 
@@ -123,7 +123,7 @@ def telegram_bot():
         if linha_encontrada:
           sheet_inscritos.delete_row(linha_encontrada)
         
-        texto = f'Você foi descadrastado e não irá mais receber as minhas mensagens! Que pena, humana! \U0001F622 \n \nCaso deseje voltar a receber os meus trabalhos, basta me mandar "/start" que eu te reinscrevo. \n \nNos vemos por aí \U0001F916'
+        texto = f'Você foi descadastrado e não irá mais receber as minhas mensagens! Que pena, humana! \U0001F622 \n \nCaso deseje voltar a receber os meus trabalhos, basta me mandar "/start" que eu te reinscrevo. \n \nNos vemos por aí \U0001F916'
 
         return texto
     
