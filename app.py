@@ -78,15 +78,6 @@ def telegram_bot():
   else:
     username = f'@ indisponível'
 
-    
-  # salvando as mensagens no sheet  
-  #if message == "/start":  
-    #inscricoes.append([str(date), str(time), first_name, last_name, username, sender_id, chat_id, message])
-    #mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message])
-    
-  #else:
-    #mensagens.append([str(date), str(time), "recebida", username, first_name, chat_id, message]) 
-  
   
   ### definição da mensagem a ser enviada a partir da mensagem recebida
   inscritos = sheet_inscritos.col_values(6)
