@@ -106,7 +106,6 @@ def telegram_bot():
     id_procurado = str(chat_id)  # é o mesmo valor que o chat_id calculado lá em cima
 
     def processo_de_descadrastamento():
-        linha_encontrada = None
         for item in data:
           if item == id_procurado:
             indice = data.index(id_procurado) #encontra a posição do item na lista
