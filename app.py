@@ -108,9 +108,11 @@ def telegram_bot():
     def processo_de_descadrastamento():
         for item in data:
           if item == id_procurado:
-            indice = data.index(id_procurado) #encontra a posição do item na lista
+            indice = data.index(item) #encontra a posição do item na lista
             linha_encontrada = indice + 1
-            sheet_inscritos.delete_row(linha_encontrada) # dois argumentos: o número da linha a ser excluída e o número de linhas a serem excluídas.
+            sheet_inscritos.update(f"A{linha_encontrada}:Z{linha_encontrada}", [[""] * 26])
+            
+              # sheet_inscritos.delete_row(linha_encontrada) # dois argumentos: o número da linha a ser excluída e o número de linhas a serem excluídas.
             
             texto = f'Você foi descadastrado e não irá mais receber as minhas mensagens! Que pena, humana! \U0001F622 \n \nCaso deseje voltar a receber os meus trabalhos, basta me mandar "/start" que eu te reinscrevo. \n \nNos vemos por aí \U0001F916'
     
