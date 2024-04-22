@@ -105,16 +105,14 @@ def telegram_bot():
 
     def processo_de_descadrastamento():
         linha_encontrada = None
-
-        for i, row in enumerate(data):
-          if row[5] == id_procurado:
-            linha_encontrada = i #+1    # índice da linha no sheet começa com 0, então adiciona-se 1 ao índice da lista
-
-        if linha_encontrada:
-          sheet_inscritos.delete_row(linha_encontrada)
-        
-        texto = f'Você foi descadastrado e não irá mais receber as minhas mensagens! Que pena, humana! \U0001F622 \n \nCaso deseje voltar a receber os meus trabalhos, basta me mandar "/start" que eu te reinscrevo. \n \nNos vemos por aí \U0001F916'
-
+        for item in data:
+          if item == id_procurado:
+            indice = data.index(id_procurado) #encontra a posição do item na lista
+            linha_encontrada = indice + 1
+            sheet_inscricao.delete_row(linha_encontrada) # dois argumentos: o número da linha a ser excluída e o número de linhas a serem excluídas.
+            
+            texto = f'Você foi descadastrado e não irá mais receber as minhas mensagens! Que pena, humana! \U0001F622 \n \nCaso deseje voltar a receber os meus trabalhos, basta me mandar "/start" que eu te reinscrevo. \n \nNos vemos por aí \U0001F916'
+    
         return texto
     
     texto_resposta = processo_de_descadrastamento()
