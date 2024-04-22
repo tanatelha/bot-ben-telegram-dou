@@ -108,7 +108,7 @@ def telegram_bot():
 
         for i, row in enumerate(data):
           if row[5] == id_procurado:
-            linha_encontrada = i+1    # índice da linha no sheet começa com 0, então adiciona-se 1 ao índice da lista
+            linha_encontrada = i #+1    # índice da linha no sheet começa com 0, então adiciona-se 1 ao índice da lista
 
         if linha_encontrada:
           sheet_inscritos.delete_rows(linha_encontrada, 1) # dois argumentos: o número da linha a ser excluída e o número de linhas a serem excluídas.
