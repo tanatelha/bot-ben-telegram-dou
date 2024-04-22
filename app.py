@@ -111,7 +111,7 @@ def telegram_bot():
             linha_encontrada = i+1    # índice da linha no sheet começa com 0, então adiciona-se 1 ao índice da lista
 
         if linha_encontrada:
-          sheet_inscritos.delete_row(linha_encontrada)
+          sheet_inscritos.delete_rows(linha_encontrada, 1) # dois argumentos: o número da linha a ser excluída e o número de linhas a serem excluídas.
         
         texto = f'Você foi descadastrado e não irá mais receber as minhas mensagens! Que pena, humana! \U0001F622 \n \nCaso deseje voltar a receber os meus trabalhos, basta me mandar "/start" que eu te reinscrevo. \n \nNos vemos por aí \U0001F916'
 
