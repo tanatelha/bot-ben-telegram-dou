@@ -100,7 +100,9 @@ def telegram_bot():
             
             
   elif message == "/exit":
-    data = sheet_inscritos.get_all_values()
+    # data = sheet_inscritos.get_all_values()
+      
+    data = sheet_inscritos.col_values(6)
     id_procurado = str(chat_id)  # é o mesmo valor que o chat_id calculado lá em cima
 
     def processo_de_descadrastamento():
